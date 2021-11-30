@@ -1813,16 +1813,15 @@ namespace FASTER.core
         {
             int totalNumPages = (int)(endPage - startPage);
             completedSemaphore = new SemaphoreSlim(0);
-            var asyncResult = new PageAsyncFlushResult<Empty>
-            {
-                completedSemaphore = completedSemaphore,
-                count = totalNumPages
-            };
             var localSegmentOffsets = new long[SegmentBufferSize];
 
             for (long flushPage = startPage; flushPage < endPage; flushPage++)
             {
-
+                var asyncResult = new PageAsyncFlushResult<Empty>
+                {
+                    completedSemaphore = completedSemaphore,
+                    count = 1
+                };
                 var pageSize = PageSize;
 
                 if (flushPage == endPage - 1)
